@@ -12,6 +12,6 @@ Python 3.7.3, and AWS
 ![plot](./readme_img/login.jpg)
 
 `Stripe Payment Page`
-![plot](./readme_img/strike payment.jpg)
+![plot]('./readme_img/strike payment.jpg')
 
 
