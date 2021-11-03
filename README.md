@@ -9,7 +9,7 @@ Python 3.7.3, and AWS
 ![plot](/readme_img/cart.jpg)
 
 `Login Page`
-![Screenshot](/readme_img/login.jpg)
+![image](/readme_img/login.jpg)
 
 `Stripe Payment Page`
 ![Screenshot]('./readme_img/strike payment.jpg')
