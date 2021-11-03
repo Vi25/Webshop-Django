@@ -3,15 +3,15 @@
 Ecommerce website built with Django 2.2.3, 
 Python 3.7.3, and AWS
 
-![image](./readme_img/home page.jpg)
+![plot](./readme_img/home page.jpg)
 
 `Cart Page`
-![image](./readme_img/cart.jpg)
+![plot](./readme_img/cart.jpg)
 
 `Login Page`
-![image](./readme_img/login.jpg)
+![plot](./readme_img/login.jpg)
 
 `Stripe Payment Page`
-![image](./readme_img/strike payment.jpg)
+![plot](./readme_img/strike payment.jpg)
 
 
