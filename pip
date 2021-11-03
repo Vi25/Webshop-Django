@@ -1,0 +1,5 @@
+Requirement already satisfied: install in d:\python project\venv\lib\site-packages (1.3.4)
+Collecting surprise
+  Downloading surprise-0.1-py2.py3-none-any.whl (1.8 kB)
+Collecting scikit-surprise
+  Downloading scikit-surprise-1.1.1.tar.gz (11.8 MB)

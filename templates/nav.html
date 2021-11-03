@@ -1,0 +1,378 @@
+{% load static %}
+{% load cart_template_tags %}
+{% load category_template_tags %}
+{% load mini_profile_tags %}
+
+
+<style>
+	.topbar {
+		background-color: white;
+		color: black !important;
+	}
+	.topbar a:hover{
+		color: black;
+	}
+</style>
+
+<!-- Header -->
+<header class="header1">
+		<!-- Header desktop -->
+		<div class="container-menu-header">
+			<div class="topbar">
+				<div class="topbar-social">
+					<a href="#" class="topbar-social-item fab fa-facebook"
+					onMouseOver="this.style.color='#0f2ff5'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-instagram"
+					onMouseOver="this.style.color='rgb(172,6,245)'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-pinterest-p"
+					onMouseOver="this.style.color='#ff0303'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-twitter"
+					onMouseOver="this.style.color='#2a8df5'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-youtube"
+					   onMouseOver="this.style.color='#ff0303'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+				</div>
+
+				<span class="topbar-child1">
+					Free shipping for standard order over $100
+				</span>
+
+				<div class="topbar-child2">
+					<span class="topbar-email">
+						<a href=" ">
+						shop@gmail.com &nbsp;
+					    </a>
+					</span>
+
+					<div class="topbar-language rs1-select2" >
+						<select class="selectpicker topbar-language" data-width="fit" style=" border-color:whitesmoke !important;">
+                        <option data-content='<span class="flag-icon flag-icon-us"></span> English'>US-EN</option>
+                        <option data-content='<span class="flag-icon flag-icon-vn"></span> Vietnamese'>VN-EN</option>
+                        </select>
+					</div>
+				</div>
+			</div>
+
+			<div class="wrap_header">
+				<!-- Logo -->
+				<a href="/" class="logo">
+					<p style="color: black; "><b style="font-size: 22px;">D</b>JANGO SHOP</p>
+				</a>
+
+				<!-- Menu -->
+				<div class="wrap_menu">
+					<nav class="menu">
+						<ul class="main_menu">
+							<li>
+								<a href="/">Home</a>
+
+							</li>
+
+							<li>
+								<a href="/shop/">Shop</a>
+							</li>
+
+                            <li class="dropdown">
+								<a href="#">Categories</a>
+                                    <ul class="sub_menu">
+                                        {% categories %}
+                                    </ul>
+							</li>
+
+
+{#							{% if request.user.is_authenticated %}#}
+{##}
+{#							<li>#}
+{#								<a href="{% url 'core:order-summary' %}">Cart<span class="badge badge-dark">{{ request.user|cart_item_count }}</span></a>#}
+{##}
+{#							</li>#}
+{#							<li>#}
+{#								<a href="{% url 'account_logout' %}">Logout</a>#}
+{#							</li>#}
+{#							{% else %}#}
+{#							<li>#}
+{#								<a href="#">Login</a>#}
+{#								<ul class="sub_menu">#}
+{#									<li><a href="{% url 'account_login' %}">Login</a></li>#}
+{#									<li><a href="{% url 'account_signup' %}">SignUp</a></li>#}
+{#								</ul>#}
+{#							</li>#}
+{#							{% endif %}#}
+						</ul>
+					</nav>
+				</div>
+
+				<!-- Header Icon -->
+
+				<div class="header-icons" >
+					<div class="header-wrapicon1">
+                        <a class="js-show-header-dropdown">
+                            <img src="{% static 'images/icons/icon-header-01.png' %}" class="header-icon1" alt="ICON">
+                        </a>
+                        <div class="header-cart header-dropdown" id="mini-profile" style="width: 330px; height: 290px!important;" >
+                            {% if request.user.is_authenticated %}
+                                {% MiniProfile request %}
+                            {% else %}
+								<ul >
+									<li style="display: inline"><a href="{% url 'account_login' %}">Login</a></li>
+                                    &nbsp; &nbsp; &nbsp;
+									<li style="display: inline"><a href="{% url 'account_signup' %}">SignUp</a></li>
+								</ul>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                        <span class="linedivide1"></span>
+
+                        <div class="header-wrapicon2">
+                         {% cart_item request.user as list %}
+                            <img src="{% static 'images/icons/icon-header-02.png' %}" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                            <span class="cart-item-count header-icons-noti">{{ request.user|cart_item_count }}</span>
+                            <!-- Header cart noti -->
+
+                            <div class="header-cart header-dropdown ">
+                            {% if list.ci.all %}
+                                <ul class="header-cart-wrapitem tini-cart">
+                                    {% for order_item in list.ci.all %}
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-item-img">
+                                            {%  if order_item.item.image %}
+                                            <img src="{{ order_item.item.image.url }}" style="width: 70px;">
+                                            {% else %}
+                                            <img src="{{ order_item.item.large_image_url|default_if_none:'#'  }}" style="width: 70px;">
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="header-cart-item-txt">
+                                            <a href="#" class="header-cart-item-name">
+                                                {{ order_item.item.title }}
+                                            </a>
+
+                                            <span class="header-cart-item-info">
+                                                {% if order_item.item.discount_price %}
+                                                {{ order_item.quantity }} x ${{ order_item.item.discount_price }}
+                                                {% else %}
+                                                {{ order_item.quantity }} x ${{ order_item.item.price }}
+                                                {% endif %}
+                                                </span>
+                                        </div>
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ul>
+                            {% else %}
+                                <ul class="tini-cart">
+                                    <h4>cart empty</h4>
+                                </ul>
+                            {% endif %}
+
+                                <div class="header-cart-total" id="cart-total">
+                                    Total: ${{ list.di.get_total }}
+                                </div>
+
+                                <div class="header-cart-buttons">
+                                    <div class="header-cart-wrapbtn">
+                                        <!-- Button -->
+                                        <a href="{% url 'core:order-summary' %}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                            View Cart
+                                        </a>
+                                    </div>
+
+                                    <div class="header-cart-wrapbtn">
+                                        <!-- Button -->
+                                        <a href="/checkout" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                            Check Out
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap_header_mobile">
+			<!-- Logo moblie -->
+			<a href="/" class="logo-mobile">
+				<img src="{% static 'images/icons/logo.png' %}" alt="IMG-LOGO">
+			</a>
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu">
+				<!-- Header Icon mobile -->
+				<div class="header-icons-mobile ">
+                    <div class="header-wrapicon1">
+                        <a class="js-show-header-dropdown">
+                            <img src="{% static 'images/icons/icon-header-01.png' %}" class="header-icon1" alt="ICON">
+                        </a>
+                        <div class="header-cart header-dropdown" id="mini-profile" >
+                            {% if request.user.is_authenticated %}
+                                {% MiniProfile request %}
+                            {% else %}
+								<ul >
+									<li style="display: inline"><a href="{% url 'account_login' %}">Login</a></li>
+                                    &nbsp; &nbsp; &nbsp;
+									<li style="display: inline"><a href="{% url 'account_signup' %}">SignUp</a></li>
+								</ul>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+					<span class="linedivide2"></span>
+
+					{% if request.user.is_authenticated %}
+					{% cart_item request.user as list %}
+					<div class="header-wrapicon2">
+						<img src="{% static 'images/icons/icon-header-02.png' %}" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span class="cart-item-count header-icons-noti">{{ request.user|cart_item_count }}</span>
+
+						<!-- Header cart noti mobile -->
+						<div class="header-cart header-dropdown">
+							{% if list.ci.all %}
+                                <ul class="header-cart-wrapitem tini-cart">
+                                    {% for order_item in list.ci.all %}
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-item-img">
+                                            {%  if order_item.item.image %}
+                                            <img src="{{ order_item.item.image.url }}" style="width: 70px;">
+                                            {% else %}
+                                            <img src="{{ order_item.item.large_image_url|default_if_none:'#'  }}" style="width: 70px;">
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="header-cart-item-txt">
+                                            <a href="{{ order_item.item.get_absolute_url }}" class="header-cart-item-name">
+                                                {{ order_item.item.title }}
+                                            </a>
+
+                                            <span class="header-cart-item-info">
+                                                {% if order_item.item.discount_price %}
+                                                {{ order_item.quantity }} x ${{ order_item.item.discount_price }}
+                                                {% else %}
+                                                {{ order_item.quantity }} x ${{ order_item.item.price }}
+                                                {% endif %}
+                                                </span>
+                                        </div>
+                                    </li>
+
+                                    {% endfor %}
+
+                                </ul>
+                            {% else %}
+                                <ul class="tini-cart">
+                                    <h4>cart empty</h4>
+                                </ul>
+                            {% endif %}
+
+							<div class="header-cart-total" id="cart-total-ss">
+                                    Total: ${{ list.di.get_total }}
+                                </div>
+
+							<div class="header-cart-buttons">
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="{% url 'core:order-summary' %}" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										View Cart
+									</a>
+								</div>
+
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="/checkout" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Check Out
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+
+				<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+					<span class="hamburger-box">
+						<span class="hamburger-inner"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Menu Mobile -->
+		<div class="wrap-side-menu" >
+			<nav class="side-menu">
+				<ul class="main-menu">
+					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
+						<span class="topbar-child1">
+							Free shipping for standard order over $100
+						</span>
+					</li>
+
+					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
+						<div class="topbar-child2-mobile">
+							<span class="topbar-email">
+								fashe@example.com
+							</span>
+
+							<div class="topbar-language rs1-select2">
+								<select class="selection-1" name="time">
+									<option>USD</option>
+									<option>EUR</option>
+								</select>
+							</div>
+						</div>
+					</li>
+
+					<li class="item-topbar-mobile p-l-10 topbar">
+						<div class="topbar-social">
+							<a href="#" class="topbar-social-item fab fa-facebook"
+					onMouseOver="this.style.color='#0f2ff5'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-instagram"
+					onMouseOver="this.style.color='rgb(172,6,245)'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-pinterest-p"
+					onMouseOver="this.style.color='#ff0303'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-twitter"
+					onMouseOver="this.style.color='#2a8df5'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-youtube"
+					   onMouseOver="this.style.color='#ff0303'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+					<a href="#" class="topbar-social-item fab fa-snapchat-ghost"
+				    onMouseOver="this.style.color='#e2de02'"  onMouseOut="this.style.color='#7b7a7a'"></a>
+						</div>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="/">Home</a>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="/shop">Shop</a>
+					</li>
+
+					{% categories_mobile %}
+
+{#					{% if request.user.is_authenticated %}#}
+{#					<li class="item-menu-mobile">#}
+{#						<a href="{% url 'core:order-summary' %}">Cart#}
+{#                            <span class=" badge badge-dark">{{ request.user|cart_item_count }}</span></a>#}
+{#					</li>#}
+{#					<li class="item-menu-mobile">#}
+{#						<a href="{% url 'account_logout' %}">Logout</a>#}
+{#					</li>#}
+{#					{% else %}#}
+{#					<li class="item-menu-mobile">#}
+{#						<a href="#">Login</a>#}
+{#						<ul class="sub-menu">#}
+{#							<li><a href="{% url 'account_login' %}">Login</a></li>#}
+{#							<li><a href="{% url 'account_signup' %}">SignUp</a></li>#}
+{#						</ul>#}
+{#						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>#}
+{#					</li>#}
+{#					{% endif %}#}
+
+				</ul>
+			</nav>
+		</div>
+	</header>
