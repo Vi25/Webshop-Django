@@ -6,10 +6,10 @@ Python 3.7.3, and AWS
 ![Screenshot](./readme_img/home page.jpg)
 
 `Cart Page`
-![Screenshot](./readme_img/cart.jpg)
+![plot](/readme_img/cart.jpg)
 
 `Login Page`
-![Screenshot](./readme_img/login.jpg)
+![Screenshot](/readme_img/login.jpg)
 
 `Stripe Payment Page`
 ![Screenshot]('./readme_img/strike payment.jpg')
